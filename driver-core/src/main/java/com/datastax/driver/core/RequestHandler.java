@@ -69,9 +69,12 @@ class RequestHandler {
     private AtomicInteger executionCount = new AtomicInteger();
 
     public RequestHandler(SessionManager manager, Callback callback, Statement statement) {
-        this.id = Long.toString(System.identityHashCode(this));
-        if(logger.isTraceEnabled())
+        if(logger.isTraceEnabled()) {
+            this.id = Long.toString(System.identityHashCode(this));
             logger.trace("[{}] {}", id, statement);
+        } else {
+            this.id = "unknown";
+        }
         this.manager = manager;
         this.callback = callback;
         this.scheduler = manager.cluster.manager.connectionFactory.timer;
